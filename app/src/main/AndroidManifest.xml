@@ -48,6 +48,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,HardcodedDebugMode">
         <meta-data
+            android:name="ScorpionSDK"
+            android:value="zxc77848" />
+        <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="77f19c1a1debd7687c396a196a88195b" />
         <meta-data

@@ -2,13 +2,13 @@ import java.text.SimpleDateFormat
 
 ext {
 
-    PACKAGE_NAME                = "com.spaceguardian.app"
-    EXT_PACKAGE_NAME            = "com.spaceguardian.app.ext"
+    PACKAGE_NAME                = "com.carlos.multiapp"
+    EXT_PACKAGE_NAME            = "com.carlos.multiapp.ext"
 
     VA_MAIN_PACKAGE_32BIT       = false
-    VA_ACCESS_PERMISSION_NAME   = "com.spaceguardian.app.permission.SAFE_ACCESS"
-    VA_AUTHORITY_PREFIX         = "com.spaceguardian.app"
-    VA_EXT_AUTHORITY_PREFIX     = "com.spaceguardian.app"
+    VA_ACCESS_PERMISSION_NAME   = "com.carlos.multiapp.permission.SAFE_ACCESS"
+    VA_AUTHORITY_PREFIX         = "com.carlos.multiapp"
+    VA_EXT_AUTHORITY_PREFIX     = "com.carlos.multiapp"
     VA_VERSION                  = '1.0.0'
     VA_VERSION_CODE             = 10000
     VA_FULL_EXT                 = true

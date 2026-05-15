@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Space Guardian</string>
+    <string name="server_process_name">:va_core</string>
+    <string name="start_app_failed">Failed to start %1$s</string>
+    <string name="tip_add_apps">Adding application...</string>
+    <string name="permission_tips_content">%1$s does not support dynamic permission requests. You must grant all required permissions in advance.</string>
+    <string name="permission_denied_tips_content">%1$s did not get required permissions. Please grant necessary permissions in system settings.</string>
+    <string name="new_user">New User</string>
+    <string name="add_app">Add App</string>
+    <string name="desktop">Desktop</string>
+</resources>

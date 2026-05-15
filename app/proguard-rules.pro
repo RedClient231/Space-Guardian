@@ -1,0 +1,15 @@
+# Space Guardian ProGuard Rules
+-keep class com.lody.virtual.** { *; }
+-keep class mirror.** { *; }
+-keep class com.swift.sandhook.** { *; }
+-keep class de.robv.android.xposed.** { *; }
+-keep class com.carlos.** { *; }
+-keepclasseswithmembernames class * { native <methods>; }
+-dontwarn android.**
+-dontwarn com.tencent.**
+-dontwarn org.slf4j.**
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.ContentProvider
+-keep class * implements android.os.Parcelable { public static final android.os.Parcelable$Creator *; }

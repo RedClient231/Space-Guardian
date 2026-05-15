@@ -1,0 +1,137 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 33
+
+    signingConfigs {
+        release {
+            storeFile file(rootProject.ext.signing_storeFile)
+            storePassword rootProject.ext.signing_storePassword
+            keyAlias = rootProject.ext.signing_keyAlias
+            keyPassword rootProject.ext.signing_keyPassword
+        }
+        debug {
+            storeFile file(rootProject.ext.signing_storeFile)
+            storePassword rootProject.ext.signing_storePassword
+            keyAlias = rootProject.ext.signing_keyAlias
+            keyPassword rootProject.ext.signing_keyPassword
+        }
+    }
+
+    defaultConfig {
+        applicationId rootProject.ext.PACKAGE_NAME
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode rootProject.ext.VA_VERSION_CODE
+        versionName rootProject.ext.VA_VERSION
+
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+
+        buildConfigField 'String', 'PACKAGE_NAME', '"' + rootProject.ext.PACKAGE_NAME + '"'
+        buildConfigField 'String', 'EXT_PACKAGE_NAME', '"' + rootProject.ext.EXT_PACKAGE_NAME + '"'
+        buildConfigField 'String', 'VA_VERSION_NAME', '"V' + rootProject.ext.VA_VERSION + '"'
+        manifestPlaceholders = [
+                PACKAGE_NAME_32BIT: rootProject.ext.PACKAGE_NAME,
+                PACKAGE_NAME_ARM64: rootProject.ext.EXT_PACKAGE_NAME,
+                VA_ACCESS_PERMISSION_NAME: rootProject.ext.VA_ACCESS_PERMISSION_NAME,
+        ]
+
+        if (rootProject.ext.VA_MAIN_PACKAGE_32BIT) {
+            ndk.abiFilters = ["armeabi-v7a"]
+        } else {
+            ndk.abiFilters = ["arm64-v8a"]
+        }
+        signingConfig signingConfigs.release
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    buildTypes {
+        debug {
+            jniDebuggable false
+            minifyEnabled false
+            zipAlignEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            jniDebuggable false
+            minifyEnabled false
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'sdk'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation(name: 'lib-release', ext: 'aar')
+
+    // AndroidX
+    implementation 'androidx.percentlayout:percentlayout:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+
+    // Lifecycle
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
+
+    // Room
+    implementation 'androidx.room:room-runtime:2.2.5'
+    annotationProcessor 'androidx.room:room-compiler:2.2.5'
+
+    // RxJava
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.retrofit2:converter-scalars:2.9.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+
+    // JSON
+    implementation 'com.google.code.gson:gson:2.8.4'
+    implementation 'com.alibaba:fastjson:1.2.59'
+
+    // Image loading
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+
+    // Utilities
+    implementation 'org.jdeferred:jdeferred-android-aar:1.2.4'
+    implementation files('libs/pinyin4j-2.5.0.jar')
+}

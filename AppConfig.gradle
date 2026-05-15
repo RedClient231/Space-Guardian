@@ -1,0 +1,66 @@
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+        google()
+        mavenCentral()
+    }
+}
+
+subprojects {
+
+    afterEvaluate {
+        def isAndroidProject = project.plugins.hasPlugin('android')
+        def isLibraryProject = project.plugins.hasPlugin('android-library')
+
+        if (isAndroidProject || isLibraryProject) {
+            android {
+                compileSdkVersion 33
+
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_1_8
+                    targetCompatibility JavaVersion.VERSION_1_8
+                }
+
+                defaultConfig {
+                    minSdkVersion 21
+                    targetSdkVersion 28
+
+                    versionCode rootProject.ext.VA_VERSION_CODE
+                    versionName rootProject.ext.VA_VERSION
+                }
+
+                lintOptions {
+                    checkReleaseBuilds false
+                    abortOnError false
+                }
+            }
+        }
+
+        if (isAndroidProject) {
+            android {
+                signingConfigs {
+                    va {
+                        storeFile       file(rootProject.ext.signing_storeFile)
+                        storePassword   rootProject.ext.signing_storePassword
+                        keyAlias        rootProject.ext.signing_keyAlias
+                        keyPassword     rootProject.ext.signing_keyPassword
+                    }
+                }
+
+                buildTypes {
+                    release {
+                        signingConfig signingConfigs.va
+                        minifyEnabled false
+                        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                    }
+
+                    debug {
+                        signingConfig signingConfigs.va
+                        minifyEnabled false
+                        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                    }
+                }
+            }
+        }
+    }
+}
